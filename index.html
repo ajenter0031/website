@@ -26,451 +26,96 @@
     <!-- Production css -->
     <!-- <link rel="stylesheet" href="/assets/css/style.min.css" /> -->
 
-
 <style>
-
-
 /* =========================================================
-   PROCREATIVES VIDEO CAROUSEL
-   VIDEO ONLY - FULLY SCOPED
+   PROCREATIVES REELS CAROUSEL  (YouTube Shorts + Instagram Reels)
+   Fully scoped: only affects .pc-video-section
    ========================================================= */
+.pc-video-section{
+    --pc-extra:0px;                /* extra height under the 9:16 video */
+    position:relative;width:100%;background:#f8f8ef;color:#000;overflow:hidden;
+}
+/* Instagram's embed has a header + footer, so cards get extra height.
+   If you see white space at the bottom, make this number smaller.
+   If the bottom of the reel is cut, make it bigger. */
+.pc-video-section.pc-has-instagram{ --pc-extra:140px; }
 
-.pc-video-section {
-    position: relative;
-    width: 100%;
-    background:#f8f8ef;
-    color: #000;
-    overflow: hidden;
+.pc-video-section .pc-video-container{width:100%;max-width:1320px;margin:0 auto;padding:100px 20px}
+.pc-video-heading{margin-bottom:55px}
+.pc-video-kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;color:#72d215;font-family:"Syne",sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.pc-video-kicker::before{content:"";display:block;width:35px;height:2px;background:#72d215}
+.pc-video-title{margin:0;color:#000;font-family:"Syne",sans-serif;font-size:clamp(38px,5vw,72px);font-weight:700;line-height:1.05}
+.pc-video-title span{color:#72d215}
+
+.pc-video-swiper{width:100%;overflow:visible}
+.pc-video-swiper .swiper-slide{height:auto}
+
+/* ---------- CARD ---------- */
+.pc-video-card{position:relative;width:100%;overflow:hidden;border-radius:22px;background:#000}
+
+/* ---------- 9:16 VIDEO AREA (Shorts / Reels are vertical) ----------
+   padding-top % is relative to the card WIDTH:
+   177.78% = 16/9 -> a perfect 9:16 box, plus --pc-extra */
+.pc-video-media{
+    position:relative;width:100%;height:0;
+    padding-top:calc(177.7778% + var(--pc-extra));
+    overflow:hidden;background:#000;
+}
+.pc-video-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;cursor:pointer}
+.pc-video-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+
+/* Instagram cards: optional poster image, gradient fallback */
+.pc-video-card[data-platform="instagram"] .pc-video-media{
+    background:var(--pc-poster,none) center/cover no-repeat,
+               linear-gradient(160deg,#833ab4,#fd1d1d 55%,#fcb045);
+    cursor:pointer;
 }
 
-.pc-video-section .pc-video-container {
-    width: 100%;
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 100px 20px;
+/* ---------- PLAY BUTTON ---------- */
+.pc-video-play{position:absolute;z-index:5;top:50%;left:50%;display:flex;align-items:center;justify-content:center;width:70px;height:70px;padding:0;border:2px solid #fff;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;cursor:pointer;transform:translate(-50%,-50%);transition:background .25s ease,color .25s ease,transform .25s ease,opacity .25s ease}
+.pc-video-play:hover{background:#72d215;color:#000;transform:translate(-50%,-50%) scale(1.08)}
+.pc-video-play svg{width:24px;height:24px;margin-left:4px;fill:currentColor}
+.pc-video-card.pc-is-playing .pc-video-play,
+.pc-video-card.pc-is-playing .pc-video-poster{opacity:0;pointer-events:none;display:none}
+
+/* ---------- OPEN ON YOUTUBE / INSTAGRAM ---------- */
+.pc-video-external{position:absolute;z-index:10;top:18px;right:18px;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:#72d215;color:#000;text-decoration:none;transition:transform .25s ease,background .25s ease}
+.pc-video-external:hover{background:#fff;color:#000;transform:scale(1.08)}
+.pc-video-external svg{width:19px;height:19px}
+
+/* ---------- NAVIGATION ---------- */
+.pc-video-navigation{display:flex;align-items:center;justify-content:space-between;margin-top:35px}
+.pc-video-arrows{display:flex;gap:10px}
+.pc-video-prev,.pc-video-next{display:flex;align-items:center;justify-content:center;width:52px;height:52px;padding:0;border:1px solid #72d215;border-radius:50%;background:transparent;color:#72d215;cursor:pointer;transition:background .25s ease,color .25s ease}
+.pc-video-prev:hover,.pc-video-next:hover{background:#72d215;color:#000}
+.pc-video-prev svg,.pc-video-next svg{width:20px;height:20px}
+.pc-video-pagination{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.pc-video-pagination .swiper-pagination-bullet{width:8px;height:8px;margin:0!important;border-radius:50%;background:rgba(0,0,0,.25);opacity:1;transition:width .25s ease,background .25s ease}
+.pc-video-pagination .swiper-pagination-bullet-active{width:28px;border-radius:10px;background:#72d215}
+
+/* Team block on the homepage stays hidden (HTML kept) */
+.section-team{display:none!important}
+
+@media (max-width:991px){
+    .pc-video-section .pc-video-container{padding:80px 20px}
+    .pc-video-heading{margin-bottom:40px}
 }
-
-/* =========================================================
-   HEADING
-   ========================================================= */
-
-.pc-video-heading {
-    margin-bottom: 55px;
-}
-
-.pc-video-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 18px;
-
-    color: #72d215;
-
-    font-family: "Syne", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.pc-video-kicker::before {
-    content: "";
-    display: block;
-    width: 35px;
-    height: 2px;
-    background: #72d215;
-}
-
-.pc-video-title {
-    margin: 0;
-
-    color: #000;
-
-    font-family: "Syne", sans-serif;
-    font-size: clamp(38px, 5vw, 72px);
-    font-weight: 700;
-    line-height: 1.05;
-}
-
-.pc-video-title span {
-    color: #72d215;
-}
-
-
-/* =========================================================
-   SWIPER
-   ========================================================= */
-
-.pc-video-swiper {
-    width: 100%;
-    overflow: visible;
-}
-
-.pc-video-swiper .swiper-slide {
-    height: auto;
-}
-
-
-/* =========================================================
-   VIDEO CARD
-   ========================================================= */
-
-.pc-video-card {
-    position: relative;
-    width: 100%;
-
-    overflow: hidden;
-
-    border-radius: 22px;
-
-    background: #000;
-}
-
-
-/* =========================================================
-   VIDEO AREA
-   ========================================================= */
-
-.pc-video-media {
-    position: relative;
-
-    width: 100%;
-
-    /*
-     * IMPORTANT:
-     * Always maintain 16:9
-     */
-    aspect-ratio: 16 / 9;
-
-    overflow: hidden;
-
-    background: #000;
-}
-
-.pc-video-media video {
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-    object-position: center;
-
-    cursor: pointer;
-}
-
-
-/* =========================================================
-   PLAY BUTTON
-   ========================================================= */
-
-.pc-video-play {
-    position: absolute;
-    z-index: 5;
-
-    top: 50%;
-    left: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 70px;
-    height: 70px;
-
-    padding: 0;
-
-    border: 2px solid #fff;
-    border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.55);
-
-    color: #fff;
-
-    cursor: pointer;
-
-    transform: translate(-50%, -50%);
-
-    transition:
-        background 0.25s ease,
-        color 0.25s ease,
-        transform 0.25s ease,
-        opacity 0.25s ease;
-}
-
-.pc-video-play:hover {
-    background: #72d215;
-    color: #000;
-
-    transform:
-        translate(-50%, -50%)
-        scale(1.08);
-}
-
-.pc-video-play svg {
-    width: 24px;
-    height: 24px;
-
-    margin-left: 4px;
-
-    fill: currentColor;
-}
-
-
-/*
- * Hide custom play button while video is playing
- */
-
-.pc-video-card.pc-is-playing .pc-video-play {
-    opacity: 0;
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   EXTERNAL LINK BUTTON
-   ========================================================= */
-
-.pc-video-external {
-    position: absolute;
-    z-index: 10;
-
-    top: 18px;
-    right: 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 46px;
-    height: 46px;
-
-    border-radius: 50%;
-
-    background: #72d215;
-
-    color: #000;
-
-    text-decoration: none;
-
-    transition:
-        transform 0.25s ease,
-        background 0.25s ease;
-}
-
-.pc-video-external:hover {
-    background: #fff;
-
-    color: #000;
-
-    transform: scale(1.08);
-}
-
-.pc-video-external svg {
-    width: 19px;
-    height: 19px;
-}
-
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-.pc-video-navigation {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 35px;
-}
-
-.pc-video-arrows {
-    display: flex;
-    gap: 10px;
-}
-
-.pc-video-prev,
-.pc-video-next {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 52px;
-    height: 52px;
-
-    padding: 0;
-
-    border: 1px solid #72d215;
-    border-radius: 50%;
-
-    background: transparent;
-
-    color: #72d215;
-
-    cursor: pointer;
-
-    transition:
-        background 0.25s ease,
-        color 0.25s ease;
-}
-
-.pc-video-prev:hover,
-.pc-video-next:hover {
-    background: #72d215;
-    color: #000;
-}
-
-.pc-video-prev svg,
-.pc-video-next svg {
-    width: 20px;
-    height: 20px;
-}
-
-
-/* =========================================================
-   PAGINATION
-   ========================================================= */
-
-.pc-video-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: 8px;
-}
-
-.pc-video-pagination .swiper-pagination-bullet {
-    width: 8px;
-    height: 8px;
-
-    margin: 0 !important;
-
-    border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.25);
-
-    opacity: 1;
-
-    transition:
-        width 0.25s ease,
-        background 0.25s ease;
-}
-
-.pc-video-pagination .swiper-pagination-bullet-active {
-    width: 28px;
-
-    border-radius: 10px;
-
-    background: #72d215;
-}
-
-
-/* =========================================================
-   TEAM SECTION
-   Keep the original Team HTML but hide it.
-   ========================================================= */
-
-.section-team {
-    display: none !important;
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 991px) {
-
-    .pc-video-section .pc-video-container {
-        padding: 80px 20px;
-    }
-
-    .pc-video-heading {
-        margin-bottom: 40px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 767px) {
-
-    .pc-video-section .pc-video-container {
-        padding: 65px 16px;
-    }
-
-    .pc-video-heading {
-        margin-bottom: 30px;
-    }
-
-    .pc-video-kicker {
-        font-size: 12px;
-        letter-spacing: 1.5px;
-    }
-
-    .pc-video-title {
-        font-size: 38px;
-        line-height: 1.08;
-    }
-
-    /*
-     * STRICT 16:9 ON MOBILE
-     */
-    .pc-video-media {
-        aspect-ratio: 16 / 9;
-    }
-
-    .pc-video-card {
-        border-radius: 16px;
-    }
-
-    .pc-video-play {
-        width: 58px;
-        height: 58px;
-    }
-
-    .pc-video-play svg {
-        width: 20px;
-        height: 20px;
-    }
-
-    .pc-video-external {
-        top: 12px;
-        right: 12px;
-
-        width: 40px;
-        height: 40px;
-    }
-
-    .pc-video-external svg {
-        width: 17px;
-        height: 17px;
-    }
-
-    .pc-video-navigation {
-        margin-top: 25px;
-    }
-
-    .pc-video-prev,
-    .pc-video-next {
-        width: 46px;
-        height: 46px;
-    }
+@media (max-width:767px){
+    .pc-video-section .pc-video-container{padding:65px 16px}
+    .pc-video-heading{margin-bottom:30px}
+    .pc-video-kicker{font-size:12px;letter-spacing:1.5px}
+    .pc-video-title{font-size:38px;line-height:1.08}
+    .pc-video-card{border-radius:16px}
+    .pc-video-play{width:58px;height:58px}
+    .pc-video-play svg{width:20px;height:20px}
+    .pc-video-external{top:12px;right:12px;width:40px;height:40px}
+    .pc-video-external svg{width:17px;height:17px}
+    .pc-video-navigation{margin-top:25px}
+    .pc-video-prev,.pc-video-next{width:46px;height:46px}
 }
 </style>
-    
-
-
-
-
 
 </head>
-
-
-
 
 <body class="bg-colorIvory">
     <div class="page-wrapper">
@@ -508,9 +153,6 @@
                                     </li>
                                     <li class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
                                         <a href="service.html" class="nav-link-item">Services</a>
-                                    </li>
-                                    <li class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="projects.html" class="nav-link-item">Projects</a>
                                     </li>
                                     <li class="nav-item nav-item-has-children">
                                         <a href="#" class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">Pages
@@ -858,154 +500,6 @@
             </section>
             <!-- ...::: Service Section end :::... -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <!-- Horizontal Line -->
             <div class="horizontal-line bg-[#e6e6e6]"></div>
             <!-- Horizontal Line -->
@@ -1084,7 +578,7 @@
             </section>
             <!-- ...::: About Section End :::... -->
 
-            <!-- ...::: Portfolio Section Start :::... -->
+            <!-- ...::: Services Slider Section Start :::... -->
             <section class="section-portfolio">
                 <!-- Section Background -->
                 <div class="bg-black">
@@ -1095,9 +589,9 @@
                             <!-- Section Block -->
                             <div class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
                                 <h2 class="jos text-colorButteryWhite">
-                                    Have a wide range of creative
+                                    End-to-end solutions that drive
                                     <span>
-                                        projects
+                                        growth
                                         <img src="assets/img/elemnts/shape-light-lime-5-arms-star.svg" alt="shape-light-lime-5-arms-star" width="74" height="70" class="inline-block h-auto w-8 md:w-10 lg:w-[57px]" />
                                     </span>
                                 </h2>
@@ -1112,17 +606,16 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-1.jpg" alt="project-img-1" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-brand-identity.jpg" alt="Brand Identity" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Product Design</a>
+                                                    <a href="service-brand-identity.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Brand Identity</a>
                                                     <p class="line-clamp-2">
-                                                        Developing the look and feel of physical products,
-                                                        aesthetics, and functionality.
+                                                        Positioning, visual identity, messaging, and brand guidelines.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-brand-identity.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1133,17 +626,16 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-2.jpg" alt="project-img-2" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-video-production.jpg" alt="Video Production" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Logo and Branding</a>
+                                                    <a href="service-video-production.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Video Production</a>
                                                     <p class="line-clamp-2">
-                                                        Creating or refreshing a company's logo and
-                                                        developing a cohesive visual identity.
+                                                        Commercial shoots, promotional videos, reels, and branded content.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-video-production.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1154,17 +646,16 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-3.jpg" alt="project-img-3" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-social-media.jpg" alt="Social Media" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">App UI/UX Design</a>
+                                                    <a href="service-social-media.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Social Media</a>
                                                     <p class="line-clamp-2">
-                                                        Designing the UI/UXe for mobile apps and web
-                                                        applications to ensure usability & engagement.
+                                                        Content, design, reels, publishing, and community management.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-social-media.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1175,17 +666,16 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-4.jpg" alt="project-img-4" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-content-creation.jpg" alt="Content Creation" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Packaging Design</a>
+                                                    <a href="service-content-creation.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Content Creation</a>
                                                     <p class="line-clamp-2">
-                                                        Creating packaging solutions for products that not
-                                                        only protect attract customers on store.
+                                                        Strategies and creative assets that educate, engage, and drive action.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-content-creation.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1196,17 +686,16 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-1.jpg" alt="project-img-1" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-performance-ads.jpg" alt="Performance Ads" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Product Design</a>
+                                                    <a href="service-performance-ads.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Performance Ads</a>
                                                     <p class="line-clamp-2">
-                                                        Developing the look and feel of physical products,
-                                                        aesthetics, and functionality.
+                                                        Managed campaigns on Google, Meta, and TikTok for high-intent audiences.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-performance-ads.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1217,17 +706,16 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-2.jpg" alt="project-img-2" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-lead-generation.jpg" alt="Lead Generation" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Logo and Branding</a>
+                                                    <a href="service-lead-generation.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Lead Generation</a>
                                                     <p class="line-clamp-2">
-                                                        Creating or refreshing a company's logo and
-                                                        developing a cohesive visual identity.
+                                                        Campaigns and funnels that turn traffic into enquiries and bookings.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-lead-generation.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1238,17 +726,16 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-3.jpg" alt="project-img-3" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-creator-marketing.jpg" alt="Creator Marketing" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">App UI/UX Design</a>
+                                                    <a href="service-creator-marketing.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Creator Marketing</a>
                                                     <p class="line-clamp-2">
-                                                        Designing the UI/UXe for mobile apps and web
-                                                        applications to ensure usability & engagement.
+                                                        Relevant influencers and creators to build awareness and credibility.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-creator-marketing.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1259,17 +746,136 @@
                                     <!-- Single Slide Item -->
                                     <div class="swiper-slide">
                                         <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                            <img src="assets/img/images/th-1/project-img-4.jpg" alt="project-img-4" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                            <img src="assets/img/images/th-1/service-seo-aeo.jpg" alt="SEO and AEO" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
 
                                             <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                                 <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                    <a href="portfolio-details.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Packaging Design</a>
+                                                    <a href="service-seo-aeo.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">SEO &amp; AEO</a>
                                                     <p class="line-clamp-2">
-                                                        Creating packaging solutions for products that not
-                                                        only protect attract customers on store.
+                                                        Be found first on search engines and AI answer platforms.
                                                     </p>
                                                 </div>
-                                                <a href="portfolio-details.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                <a href="service-seo-aeo.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                    <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
+                                                    <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Slide Item -->
+                                    <!-- Single Slide Item -->
+                                    <div class="swiper-slide">
+                                        <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
+                                            <img src="assets/img/images/th-1/service-web-development.jpg" alt="Web Development" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+
+                                            <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
+                                                <div class="max-w-[380px] flex-1 text-colorButteryWhite">
+                                                    <a href="service-web-development.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Web Development</a>
+                                                    <p class="line-clamp-2">
+                                                        Modern, responsive websites built around your brand and customers.
+                                                    </p>
+                                                </div>
+                                                <a href="service-web-development.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                    <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
+                                                    <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Slide Item -->
+                                    <!-- Single Slide Item -->
+                                    <div class="swiper-slide">
+                                        <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
+                                            <img src="assets/img/images/th-1/service-email-whatsapp.jpg" alt="Email and WhatsApp" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+
+                                            <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
+                                                <div class="max-w-[380px] flex-1 text-colorButteryWhite">
+                                                    <a href="service-email-whatsapp.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Email &amp; WhatsApp</a>
+                                                    <p class="line-clamp-2">
+                                                        Targeted email and WhatsApp campaigns for follow-ups and retention.
+                                                    </p>
+                                                </div>
+                                                <a href="service-email-whatsapp.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                    <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
+                                                    <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Slide Item -->
+                                    <!-- Single Slide Item -->
+                                    <div class="swiper-slide">
+                                        <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
+                                            <img src="assets/img/images/th-1/service-online-reputation.jpg" alt="Online Reputation" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+
+                                            <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
+                                                <div class="max-w-[380px] flex-1 text-colorButteryWhite">
+                                                    <a href="service-online-reputation.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Online Reputation</a>
+                                                    <p class="line-clamp-2">
+                                                        Manage reviews and feedback to build trust where customers decide.
+                                                    </p>
+                                                </div>
+                                                <a href="service-online-reputation.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                    <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
+                                                    <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Slide Item -->
+                                    <!-- Single Slide Item -->
+                                    <div class="swiper-slide">
+                                        <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
+                                            <img src="assets/img/images/th-1/service-analytics-data.jpg" alt="Analytics and Data" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+
+                                            <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
+                                                <div class="max-w-[380px] flex-1 text-colorButteryWhite">
+                                                    <a href="service-analytics-data.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Analytics &amp; Data</a>
+                                                    <p class="line-clamp-2">
+                                                        Track leads and conversions so every decision is backed by data.
+                                                    </p>
+                                                </div>
+                                                <a href="service-analytics-data.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                    <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
+                                                    <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Slide Item -->
+                                    <!-- Single Slide Item -->
+                                    <div class="swiper-slide">
+                                        <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
+                                            <img src="assets/img/images/th-1/service-ai-automation.jpg" alt="AI Automation" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+
+                                            <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
+                                                <div class="max-w-[380px] flex-1 text-colorButteryWhite">
+                                                    <a href="service-ai-automation.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">AI Automation</a>
+                                                    <p class="line-clamp-2">
+                                                        AI-assisted content, automated follow-ups, and smarter workflows.
+                                                    </p>
+                                                </div>
+                                                <a href="service-ai-automation.html" class="relative inline-flex items-start justify-center overflow-hidden">
+                                                    <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
+                                                    <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Single Slide Item -->
+                                    <!-- Single Slide Item -->
+                                    <div class="swiper-slide">
+                                        <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
+                                            <img src="assets/img/images/th-1/service-sales-management.jpg" alt="Sales Management" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+
+                                            <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
+                                                <div class="max-w-[380px] flex-1 text-colorButteryWhite">
+                                                    <a href="service-sales-management.html" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Sales Management</a>
+                                                    <p class="line-clamp-2">
+                                                        Lead handling and customer journeys that connect marketing to revenue.
+                                                    </p>
+                                                </div>
+                                                <a href="service-sales-management.html" class="relative inline-flex items-start justify-center overflow-hidden">
                                                     <img src="assets/img/icons/icon-buttery-white-arrow-right.svg" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                     <img src="assets/img/icons/icon-light-lime-arrow-right.svg" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                                 </a>
@@ -1300,169 +906,7 @@
                 </div>
                 <!-- Section Background -->
             </section>
-            <!-- ...::: Portfolio Section End :::... -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <!-- ...::: Services Slider Section End :::... -->
 
             <!-- ...::: Process Section Start :::... -->
             <section class="section-process">
@@ -1796,979 +1240,75 @@
             </div>
             <!-- ...::: Text Slider Section End :::... -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- =========================================================
-     PROCREATIVES VIDEO CAROUSEL
-     VIDEO ONLY
+            <!-- =========================================================
+     PROCREATIVES REELS CAROUSEL  (YouTube Shorts + Instagram Reels)
+     HOW TO ADD A VIDEO: copy one slide below, then change
+       data-platform  -> youtube  or  instagram
+       data-id        -> YouTube video ID, or Instagram reel code
+       the link href  -> the normal public link (opens when the arrow is clicked)
+     Slides whose data-id still starts with YOUR_ are hidden automatically.
      ========================================================= -->
-
 <section class="pc-video-section">
-
     <div class="pc-video-container">
-
-        <!-- Section Heading -->
-
         <div class="pc-video-heading">
-
-            <div class="pc-video-kicker">
-                Our Latest
-            </div>
-
-            <h2 class="pc-video-title">
-                Reels &amp; <span>Creative Work</span>
-            </h2>
-
+            <div class="pc-video-kicker">Our Latest</div>
+            <h2 class="pc-video-title">Reels &amp; <span>Creative Work</span></h2>
         </div>
-
-
-        <!-- =================================================
-             VIDEO SWIPER
-             ================================================= -->
 
         <div class="swiper pc-video-swiper">
-
             <div class="swiper-wrapper">
-
-
-                <!-- =========================
-                     VIDEO 1
-                     ========================= -->
-
+                <!-- YouTube Short 1 -->
                 <div class="swiper-slide">
-
-                    <div class="pc-video-card">
-
+                    <div class="pc-video-card" data-platform="youtube" data-id="BeX89q82oTo" data-title="YouTube Short 1">
                         <div class="pc-video-media">
-
-                            <video
-                                preload="metadata"
-                                playsinline
-                                controls
-                            >
-
-                                <source
-                                    src="https://www.youtube.com/shorts/BeX89q82oTo"
-                                    type="video/mp4"
-                                >
-
-                            </video>
-
-
-                            <!-- Play Button -->
-
-                            <button
-                                type="button"
-                                class="pc-video-play"
-                                aria-label="Play video"
-                            >
-
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z"></path>
-                                </svg>
-
-                            </button>
-
-
-                            <!-- External Link -->
-
-                            <a
-                                href="https://www.youtube.com/shorts/xfjgsZn6dIs"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="pc-video-external"
-                                aria-label="Open project"
-                            >
-
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                >
-
-                                    <path d="M14 3h7v7"></path>
-
-                                    <path d="M10 14L21 3"></path>
-
-                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
-
-                                </svg>
-
-                            </a>
-
+                            <img class="pc-video-poster" src="https://i.ytimg.com/vi/BeX89q82oTo/hqdefault.jpg" alt="YouTube Short 1" loading="lazy" />
+                            <button type="button" class="pc-video-play" aria-label="Play video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
+                            <a href="https://www.youtube.com/shorts/BeX89q82oTo" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
                         </div>
-
                     </div>
-
                 </div>
-
-
-                <!-- =========================
-                     VIDEO 2
-                     ========================= -->
-
+                <!-- YouTube Short 2 -->
                 <div class="swiper-slide">
-
-                    <div class="pc-video-card">
-
+                    <div class="pc-video-card" data-platform="youtube" data-id="xfjgsZn6dIs" data-title="YouTube Short 2">
                         <div class="pc-video-media">
-
-                            <video
-                                preload="metadata"
-                                playsinline
-                                controls
-                            >
-
-                                <source
-                                    src="YOUR-VIDEO-URL-2.mp4"
-                                    type="video/mp4"
-                                >
-
-                            </video>
-
-
-                            <!-- Play Button -->
-
-                            <button
-                                type="button"
-                                class="pc-video-play"
-                                aria-label="Play video"
-                            >
-
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z"></path>
-                                </svg>
-
-                            </button>
-
-
-                            <!-- External Link -->
-
-                            <a
-                                href="YOUR-EXTERNAL-URL-2"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="pc-video-external"
-                                aria-label="Open project"
-                            >
-
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                >
-
-                                    <path d="M14 3h7v7"></path>
-
-                                    <path d="M10 14L21 3"></path>
-
-                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
-
-                                </svg>
-
-                            </a>
-
+                            <img class="pc-video-poster" src="https://i.ytimg.com/vi/xfjgsZn6dIs/hqdefault.jpg" alt="YouTube Short 2" loading="lazy" />
+                            <button type="button" class="pc-video-play" aria-label="Play video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
+                            <a href="https://www.youtube.com/shorts/xfjgsZn6dIs" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
                         </div>
-
                     </div>
-
                 </div>
-
-
-                <!-- =========================
-                     VIDEO 3
-                     ========================= -->
-
+                <!-- Instagram Reel 1 -->
                 <div class="swiper-slide">
-
-                    <div class="pc-video-card">
-
-                        <div class="pc-video-media">
-
-                            <video
-                                preload="metadata"
-                                playsinline
-                                controls
-                            >
-
-                                <source
-                                    src="YOUR-VIDEO-URL-3.mp4"
-                                    type="video/mp4"
-                                >
-
-                            </video>
-
-
-                            <!-- Play Button -->
-
-                            <button
-                                type="button"
-                                class="pc-video-play"
-                                aria-label="Play video"
-                            >
-
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z"></path>
-                                </svg>
-
-                            </button>
-
-
-                            <!-- External Link -->
-
-                            <a
-                                href="YOUR-EXTERNAL-URL-3"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="pc-video-external"
-                                aria-label="Open project"
-                            >
-
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                >
-
-                                    <path d="M14 3h7v7"></path>
-
-                                    <path d="M10 14L21 3"></path>
-
-                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
-
-                                </svg>
-
-                            </a>
-
+                    <div class="pc-video-card" data-platform="instagram" data-id="YOUR_REEL_CODE_1" data-title="Instagram Reel 1">
+                        <div class="pc-video-media" style="--pc-poster:url('assets/img/reels/YOUR_REEL_CODE_1.jpg')">
+                            
+                            <button type="button" class="pc-video-play" aria-label="Play video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
+                            <a href="https://www.instagram.com/reel/YOUR_REEL_CODE_1/" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
                         </div>
-
                     </div>
-
                 </div>
-
-
-                <!-- =========================
-                     VIDEO 4
-                     ========================= -->
-
+                <!-- Instagram Reel 2 -->
                 <div class="swiper-slide">
-
-                    <div class="pc-video-card">
-
-                        <div class="pc-video-media">
-
-                            <video
-                                preload="metadata"
-                                playsinline
-                                controls
-                            >
-
-                                <source
-                                    src="YOUR-VIDEO-URL-4.mp4"
-                                    type="video/mp4"
-                                >
-
-                            </video>
-
-
-                            <!-- Play Button -->
-
-                            <button
-                                type="button"
-                                class="pc-video-play"
-                                aria-label="Play video"
-                            >
-
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z"></path>
-                                </svg>
-
-                            </button>
-
-
-                            <!-- External Link -->
-
-                            <a
-                                href="YOUR-EXTERNAL-URL-4"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="pc-video-external"
-                                aria-label="Open project"
-                            >
-
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                >
-
-                                    <path d="M14 3h7v7"></path>
-
-                                    <path d="M10 14L21 3"></path>
-
-                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
-
-                                </svg>
-
-                            </a>
-
+                    <div class="pc-video-card" data-platform="instagram" data-id="YOUR_REEL_CODE_2" data-title="Instagram Reel 2">
+                        <div class="pc-video-media" style="--pc-poster:url('assets/img/reels/YOUR_REEL_CODE_2.jpg')">
+                            
+                            <button type="button" class="pc-video-play" aria-label="Play video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
+                            <a href="https://www.instagram.com/reel/YOUR_REEL_CODE_2/" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
                         </div>
-
                     </div>
-
                 </div>
-
-
             </div>
-
         </div>
-
-
-        <!-- =================================================
-             NAVIGATION
-             ================================================= -->
 
         <div class="pc-video-navigation">
-
             <div class="pc-video-arrows">
-
-                <button
-                    type="button"
-                    class="pc-video-prev"
-                    aria-label="Previous video"
-                >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-
-                        <path d="M19 12H5"></path>
-
-                        <path d="M12 19l-7-7 7-7"></path>
-
-                    </svg>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="pc-video-next"
-                    aria-label="Next video"
-                >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-
-                        <path d="M5 12h14"></path>
-
-                        <path d="M12 5l7 7-7 7"></path>
-
-                    </svg>
-
-                </button>
-
+                <button type="button" class="pc-video-prev" aria-label="Previous video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg></button>
+                <button type="button" class="pc-video-next" aria-label="Next video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></button>
             </div>
-
-
             <div class="pc-video-pagination"></div>
-
         </div>
-
     </div>
-
 </section>
-
-
-<!-- =========================================================
-     EXISTING TEAM SECTION
-     DO NOT DELETE
-     ========================================================= -->
-
-<!-- ...::: Team Section Start :::... -->
-<section class="section-team">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-/* =========================================================
-   PROCREATIVES VIDEO / REELS CAROUSEL
-   Fully isolated JavaScript
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const pcVideoSwiperElement =
-        document.querySelector(".pc-video-swiper");
-
-    if (!pcVideoSwiperElement) {
-        return;
-    }
-
-
-    /* =====================================================
-       INITIALIZE SWIPER
-       ===================================================== */
-
-    const pcVideoSwiper = new Swiper(
-        ".pc-video-swiper",
-        {
-            slidesPerView: 1.05,
-            spaceBetween: 16,
-
-            speed: 600,
-
-            grabCursor: true,
-
-            navigation: {
-                nextEl: ".pc-video-next",
-                prevEl: ".pc-video-prev"
-            },
-
-            pagination: {
-                el: ".pc-video-pagination",
-                clickable: true
-            },
-
-            breakpoints: {
-
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 20
-                },
-
-                992: {
-                    slidesPerView: 3,
-                    spaceBetween: 24
-                },
-
-                1200: {
-                    slidesPerView: 3,
-                    spaceBetween: 28
-                }
-            },
-
-            on: {
-
-                slideChange: function () {
-
-                    /*
-                     * Pause every video when the carousel
-                     * changes slide.
-                     */
-
-                    document
-                        .querySelectorAll(".pc-video-media video")
-                        .forEach(function (video) {
-
-                            video.pause();
-
-                            video.currentTime = 0;
-
-                            const card =
-                                video.closest(".pc-video-card");
-
-                            if (card) {
-                                card.classList.remove(
-                                    "pc-is-playing"
-                                );
-                            }
-
-                        });
-
-                }
-
-            }
-        }
-    );
-
-
-    /* =====================================================
-       VIDEO PLAY / PAUSE
-       ===================================================== */
-
-    const pcVideoCards =
-        document.querySelectorAll(".pc-video-card");
-
-
-    pcVideoCards.forEach(function (card) {
-
-        const video =
-            card.querySelector("video");
-
-        const playButton =
-            card.querySelector(".pc-video-play");
-
-
-        if (!video) {
-            return;
-        }
-
-
-        /* -----------------------------------------------
-           PLAY BUTTON
-           ----------------------------------------------- */
-
-        if (playButton) {
-
-            playButton.addEventListener(
-                "click",
-                function (event) {
-
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    pcPlayVideo(card, video);
-
-                }
-            );
-
-        }
-
-
-        /* -----------------------------------------------
-           CLICK VIDEO
-           ----------------------------------------------- */
-
-        video.addEventListener(
-            "click",
-            function () {
-
-                if (video.paused) {
-
-                    pcPlayVideo(card, video);
-
-                } else {
-
-                    video.pause();
-
-                    card.classList.remove(
-                        "pc-is-playing"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* -----------------------------------------------
-           VIDEO PLAY EVENT
-           ----------------------------------------------- */
-
-        video.addEventListener(
-            "play",
-            function () {
-
-                card.classList.add(
-                    "pc-is-playing"
-                );
-
-            }
-        );
-
-
-        /* -----------------------------------------------
-           VIDEO PAUSE EVENT
-           ----------------------------------------------- */
-
-        video.addEventListener(
-            "pause",
-            function () {
-
-                card.classList.remove(
-                    "pc-is-playing"
-                );
-
-            }
-        );
-
-
-        /* -----------------------------------------------
-           VIDEO ENDED
-           ----------------------------------------------- */
-
-        video.addEventListener(
-            "ended",
-            function () {
-
-                card.classList.remove(
-                    "pc-is-playing"
-                );
-
-                video.currentTime = 0;
-
-            }
-        );
-
-    });
-
-
-    /* =====================================================
-       PLAY VIDEO FUNCTION
-       ===================================================== */
-
-    function pcPlayVideo(card, video) {
-
-        /*
-         * Pause every other video first.
-         */
-
-        document
-            .querySelectorAll(".pc-video-media video")
-            .forEach(function (otherVideo) {
-
-                if (otherVideo !== video) {
-
-                    otherVideo.pause();
-
-                    const otherCard =
-                        otherVideo.closest(
-                            ".pc-video-card"
-                        );
-
-                    if (otherCard) {
-
-                        otherCard.classList.remove(
-                            "pc-is-playing"
-                        );
-
-                    }
-
-                }
-
-            });
-
-
-        /*
-         * Play selected video.
-         */
-
-        const playPromise = video.play();
-
-
-        /*
-         * Some browsers return a Promise
-         * from video.play().
-         */
-
-        if (playPromise !== undefined) {
-
-            playPromise.catch(function () {
-
-                /*
-                 * Browser prevented playback.
-                 * User can press play again.
-                 */
-
-                card.classList.remove(
-                    "pc-is-playing"
-                );
-
-            });
-
-        }
-
-    }
-
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- =========================================================
-     YOUR EXISTING TEAM SECTION REMAINS BELOW
-     ========================================================= -->
-
-<!-- ...::: Team Section Start :::... -->
-<section class="section-team">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             <!-- ...::: Team Section Start :::... -->
             <section class="section-team">
@@ -3060,6 +1600,89 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <!-- Main js -->
     <script src="assets/js/main.js"></script>
+
+<script>
+/* PROCREATIVES REELS CAROUSEL - plays YouTube Shorts and Instagram Reels inline */
+(function () {
+    function init() {
+        var section = document.querySelector(".pc-video-section");
+        if (!section || typeof Swiper === "undefined") return;
+
+        /* hide slides that still have a placeholder id */
+        section.querySelectorAll(".pc-video-card").forEach(function (card) {
+            var id = card.getAttribute("data-id") || "";
+            if (!id || id.indexOf("YOUR_") === 0) {
+                var slide = card.closest(".swiper-slide");
+                if (slide) slide.remove();
+            }
+        });
+
+        /* Instagram embeds need extra height for their header/footer */
+        if (section.querySelector('[data-platform="instagram"]')) {
+            section.classList.add("pc-has-instagram");
+        }
+
+        var swiper = new Swiper(section.querySelector(".pc-video-swiper"), {
+            slidesPerView: 1.15,
+            spaceBetween: 16,
+            speed: 600,
+            grabCursor: true,
+            navigation: { nextEl: ".pc-video-next", prevEl: ".pc-video-prev" },
+            pagination: { el: ".pc-video-pagination", clickable: true },
+            breakpoints: {
+                576:  { slidesPerView: 2.1, spaceBetween: 18 },
+                768:  { slidesPerView: 2.6, spaceBetween: 20 },
+                992:  { slidesPerView: 3.2, spaceBetween: 24 },
+                1200: { slidesPerView: 4,   spaceBetween: 24 }
+            }
+        });
+
+        function reset(card) {
+            var frame = card.querySelector("iframe");
+            if (frame) frame.remove();
+            card.classList.remove("pc-is-playing");
+        }
+        function resetAll(except) {
+            section.querySelectorAll(".pc-video-card").forEach(function (c) {
+                if (c !== except) reset(c);
+            });
+        }
+
+        function play(card) {
+            if (card.classList.contains("pc-is-playing")) return;
+            resetAll(card);
+            var id = card.getAttribute("data-id");
+            var type = card.getAttribute("data-platform");
+            var src = type === "instagram"
+                ? "https://www.instagram.com/reel/" + id + "/embed/"
+                : "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+            var frame = document.createElement("iframe");
+            frame.src = src;
+            frame.title = card.getAttribute("data-title") || "Video";
+            frame.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture; fullscreen");
+            frame.setAttribute("allowfullscreen", "");
+            frame.setAttribute("scrolling", "no");
+            card.querySelector(".pc-video-media").appendChild(frame);
+            card.classList.add("pc-is-playing");
+        }
+
+        section.querySelectorAll(".pc-video-card").forEach(function (card) {
+            var media = card.querySelector(".pc-video-media");
+            media.addEventListener("click", function (e) {
+                if (e.target.closest(".pc-video-external")) return; /* let the link open */
+                if (e.target.tagName === "IFRAME") return;
+                e.preventDefault();
+                play(card);
+            });
+        });
+
+        swiper.on("slideChange", function () { resetAll(null); });
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
+})();
+</script>
+
 </body>
 
 </html>
