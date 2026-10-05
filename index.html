@@ -25,7 +25,430 @@
 
     <!-- Production css -->
     <!-- <link rel="stylesheet" href="/assets/css/style.min.css" /> -->
+
+
+<style>
+
+<style>
+/* =========================================================
+   PROCREATIVES VIDEO / REELS CAROUSEL
+   Fully scoped - does not modify existing theme components
+   ========================================================= */
+
+.pc-video-section {
+    position: relative;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+}
+
+.pc-video-section .pc-video-container {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 100px 20px;
+}
+
+/* ---------- Section Heading ---------- */
+
+.pc-video-heading {
+    margin-bottom: 55px;
+}
+
+.pc-video-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: #72d215;
+    font-family: "Syne", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.pc-video-kicker::before {
+    content: "";
+    display: block;
+    width: 35px;
+    height: 2px;
+    background: #72d215;
+}
+
+.pc-video-title {
+    margin: 0;
+    color: #fff;
+    font-family: "Syne", sans-serif;
+    font-size: clamp(38px, 5vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.pc-video-title span {
+    color: #72d215;
+}
+
+/* ---------- Swiper ---------- */
+
+.pc-video-swiper {
+    width: 100%;
+    overflow: visible;
+}
+
+.pc-video-swiper .swiper-slide {
+    height: auto;
+}
+
+/* ---------- Video Card ---------- */
+
+.pc-video-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 22px;
+    background: #111;
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease;
+}
+
+.pc-video-card:hover {
+    border-color: rgba(114, 210, 21, 0.65);
+    transform: translateY(-5px);
+}
+
+/* ---------- Video Area ---------- */
+
+.pc-video-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #111;
+}
+
+.pc-video-media video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+}
+
+/* ---------- Play Button ---------- */
+
+.pc-video-play {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.pc-video-play:hover {
+    background: #72d215;
+    color: #000;
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+.pc-video-play svg {
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    fill: currentColor;
+}
+
+.pc-video-card.pc-is-playing .pc-video-play {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------- Duration ---------- */
+
+.pc-video-duration {
+    position: absolute;
+    z-index: 4;
+    right: 14px;
+    bottom: 14px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-family: "Syne", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ---------- Card Content ---------- */
+
+.pc-video-content {
+    position: relative;
+    padding: 24px 24px 26px;
+}
+
+.pc-video-card-title {
+    margin: 0 50px 9px 0;
+    color: #fff;
+    font-family: "Syne", sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.pc-video-card-description {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+/* ---------- External Link ---------- */
+
+.pc-video-external {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    background: #72d215;
+    color: #000;
+    text-decoration: none;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.pc-video-external:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.pc-video-external svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ---------- Navigation ---------- */
+
+.pc-video-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 35px;
+}
+
+.pc-video-arrows {
+    display: flex;
+    gap: 10px;
+}
+
+.pc-video-prev,
+.pc-video-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: 1px solid #72d215;
+    border-radius: 50%;
+    background: transparent;
+    color: #72d215;
+    cursor: pointer;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.pc-video-prev:hover,
+.pc-video-next:hover {
+    background: #72d215;
+    color: #000;
+}
+
+.pc-video-prev svg,
+.pc-video-next svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ---------- Pagination ---------- */
+
+.pc-video-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.pc-video-pagination .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 !important;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    opacity: 1;
+    transition:
+        width 0.25s ease,
+        background 0.25s ease;
+}
+
+.pc-video-pagination .swiper-pagination-bullet-active {
+    width: 28px;
+    border-radius: 10px;
+    background: #72d215;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .pc-video-section .pc-video-container {
+        padding: 80px 20px;
+    }
+
+    .pc-video-heading {
+        margin-bottom: 40px;
+    }
+
+    .pc-video-card-title {
+        font-size: 21px;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .pc-video-section .pc-video-container {
+        padding: 65px 16px;
+    }
+
+    .pc-video-heading {
+        margin-bottom: 30px;
+    }
+
+    .pc-video-kicker {
+        font-size: 12px;
+        letter-spacing: 1.5px;
+    }
+
+    .pc-video-title {
+        font-size: 38px;
+        line-height: 1.08;
+    }
+
+    /*
+     * IMPORTANT:
+     * Video remains strictly 16:9 on mobile.
+     * It will NOT stretch vertically.
+     */
+    .pc-video-media {
+        aspect-ratio: 16 / 9;
+    }
+
+    .pc-video-card {
+        border-radius: 16px;
+    }
+
+    .pc-video-content {
+        padding: 19px 18px 21px;
+    }
+
+    .pc-video-card-title {
+        margin-right: 45px;
+        font-size: 19px;
+    }
+
+    .pc-video-card-description {
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .pc-video-play {
+        width: 58px;
+        height: 58px;
+    }
+
+    .pc-video-play svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .pc-video-navigation {
+        margin-top: 25px;
+    }
+
+    .pc-video-prev,
+    .pc-video-next {
+        width: 46px;
+        height: 46px;
+    }
+
+    /*
+     * Hide Team section only.
+     * Nothing else on the website is affected.
+     */
+    .section-team {
+        display: none !important;
+    }
+}
+
+/* ---------- Team Section Hide ---------- */
+
+.section-team {
+    display: none !important;
+}
+</style>
+
+
+
+
+
+
+    </style>
+
+
+
+
+
+
 </head>
+
+
+
 
 <body class="bg-colorIvory">
     <div class="page-wrapper">
@@ -1350,6 +1773,959 @@
                 </div>
             </div>
             <!-- ...::: Text Slider Section End :::... -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========================================================
+     PROCREATIVES VIDEO / REELS CAROUSEL
+     ========================================================= -->
+
+<section class="pc-video-section">
+
+    <div class="pc-video-container">
+
+        <!-- Section Heading -->
+        <div class="pc-video-heading">
+
+            <div class="pc-video-kicker">
+                Our Latest
+            </div>
+
+            <h2 class="pc-video-title">
+                Reels &amp; <span>Creative Work</span>
+            </h2>
+
+        </div>
+
+
+        <!-- Video Slider -->
+        <div class="swiper pc-video-swiper">
+
+            <div class="swiper-wrapper">
+
+
+                <!-- =================================================
+                     VIDEO 1
+                     ================================================= -->
+                <div class="swiper-slide">
+
+                    <div class="pc-video-card">
+
+                        <div class="pc-video-media">
+
+                            <video
+                                preload="metadata"
+                                playsinline
+                                controls
+                            >
+                                <source
+                                    src="YOUR-VIDEO-URL-1.mp4"
+                                    type="video/mp4"
+                                >
+                            </video>
+
+                            <button
+                                type="button"
+                                class="pc-video-play"
+                                aria-label="Play video"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"></path>
+                                </svg>
+                            </button>
+
+                            <span class="pc-video-duration">
+                                00:30
+                            </span>
+
+                        </div>
+
+                        <div class="pc-video-content">
+
+                            <a
+                                href="YOUR-EXTERNAL-URL-1"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="pc-video-external"
+                                aria-label="Open project"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="M14 3h7v7"></path>
+                                    <path d="M10 14L21 3"></path>
+                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                                </svg>
+                            </a>
+
+                            <h3 class="pc-video-card-title">
+                                Creative Campaign
+                            </h3>
+
+                            <p class="pc-video-card-description">
+                                A creative campaign designed to build
+                                attention and communicate the brand clearly.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     VIDEO 2
+                     ================================================= -->
+                <div class="swiper-slide">
+
+                    <div class="pc-video-card">
+
+                        <div class="pc-video-media">
+
+                            <video
+                                preload="metadata"
+                                playsinline
+                                controls
+                            >
+                                <source
+                                    src="YOUR-VIDEO-URL-2.mp4"
+                                    type="video/mp4"
+                                >
+                            </video>
+
+                            <button
+                                type="button"
+                                class="pc-video-play"
+                                aria-label="Play video"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"></path>
+                                </svg>
+                            </button>
+
+                            <span class="pc-video-duration">
+                                00:45
+                            </span>
+
+                        </div>
+
+                        <div class="pc-video-content">
+
+                            <a
+                                href="YOUR-EXTERNAL-URL-2"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="pc-video-external"
+                                aria-label="Open project"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="M14 3h7v7"></path>
+                                    <path d="M10 14L21 3"></path>
+                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                                </svg>
+                            </a>
+
+                            <h3 class="pc-video-card-title">
+                                Brand Story
+                            </h3>
+
+                            <p class="pc-video-card-description">
+                                A visual brand story created to present the
+                                identity, message and creative direction.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     VIDEO 3
+                     ================================================= -->
+                <div class="swiper-slide">
+
+                    <div class="pc-video-card">
+
+                        <div class="pc-video-media">
+
+                            <video
+                                preload="metadata"
+                                playsinline
+                                controls
+                            >
+                                <source
+                                    src="YOUR-VIDEO-URL-3.mp4"
+                                    type="video/mp4"
+                                >
+                            </video>
+
+                            <button
+                                type="button"
+                                class="pc-video-play"
+                                aria-label="Play video"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"></path>
+                                </svg>
+                            </button>
+
+                            <span class="pc-video-duration">
+                                00:35
+                            </span>
+
+                        </div>
+
+                        <div class="pc-video-content">
+
+                            <a
+                                href="YOUR-EXTERNAL-URL-3"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="pc-video-external"
+                                aria-label="Open project"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="M14 3h7v7"></path>
+                                    <path d="M10 14L21 3"></path>
+                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                                </svg>
+                            </a>
+
+                            <h3 class="pc-video-card-title">
+                                Social Media Creative
+                            </h3>
+
+                            <p class="pc-video-card-description">
+                                Short-form creative content built for social
+                                platforms and digital campaigns.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     VIDEO 4
+                     ================================================= -->
+                <div class="swiper-slide">
+
+                    <div class="pc-video-card">
+
+                        <div class="pc-video-media">
+
+                            <video
+                                preload="metadata"
+                                playsinline
+                                controls
+                            >
+                                <source
+                                    src="YOUR-VIDEO-URL-4.mp4"
+                                    type="video/mp4"
+                                >
+                            </video>
+
+                            <button
+                                type="button"
+                                class="pc-video-play"
+                                aria-label="Play video"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"></path>
+                                </svg>
+                            </button>
+
+                            <span class="pc-video-duration">
+                                00:40
+                            </span>
+
+                        </div>
+
+                        <div class="pc-video-content">
+
+                            <a
+                                href="YOUR-EXTERNAL-URL-4"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="pc-video-external"
+                                aria-label="Open project"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="M14 3h7v7"></path>
+                                    <path d="M10 14L21 3"></path>
+                                    <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+                                </svg>
+                            </a>
+
+                            <h3 class="pc-video-card-title">
+                                Digital Experience
+                            </h3>
+
+                            <p class="pc-video-card-description">
+                                A digital-first creative experience combining
+                                design, storytelling and marketing.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+        <div class="pc-video-navigation">
+
+            <div class="pc-video-arrows">
+
+                <button
+                    type="button"
+                    class="pc-video-prev"
+                    aria-label="Previous video"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M19 12H5"></path>
+                        <path d="M12 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+
+                <button
+                    type="button"
+                    class="pc-video-next"
+                    aria-label="Next video"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+
+            </div>
+
+
+            <div class="pc-video-pagination"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+/* =========================================================
+   PROCREATIVES VIDEO / REELS CAROUSEL
+   Fully isolated JavaScript
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const pcVideoSwiperElement =
+        document.querySelector(".pc-video-swiper");
+
+    if (!pcVideoSwiperElement) {
+        return;
+    }
+
+
+    /* =====================================================
+       INITIALIZE SWIPER
+       ===================================================== */
+
+    const pcVideoSwiper = new Swiper(
+        ".pc-video-swiper",
+        {
+            slidesPerView: 1.05,
+            spaceBetween: 16,
+
+            speed: 600,
+
+            grabCursor: true,
+
+            navigation: {
+                nextEl: ".pc-video-next",
+                prevEl: ".pc-video-prev"
+            },
+
+            pagination: {
+                el: ".pc-video-pagination",
+                clickable: true
+            },
+
+            breakpoints: {
+
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+
+                992: {
+                    slidesPerView: 3,
+                    spaceBetween: 24
+                },
+
+                1200: {
+                    slidesPerView: 3,
+                    spaceBetween: 28
+                }
+            },
+
+            on: {
+
+                slideChange: function () {
+
+                    /*
+                     * Pause every video when the carousel
+                     * changes slide.
+                     */
+
+                    document
+                        .querySelectorAll(".pc-video-media video")
+                        .forEach(function (video) {
+
+                            video.pause();
+
+                            video.currentTime = 0;
+
+                            const card =
+                                video.closest(".pc-video-card");
+
+                            if (card) {
+                                card.classList.remove(
+                                    "pc-is-playing"
+                                );
+                            }
+
+                        });
+
+                }
+
+            }
+        }
+    );
+
+
+    /* =====================================================
+       VIDEO PLAY / PAUSE
+       ===================================================== */
+
+    const pcVideoCards =
+        document.querySelectorAll(".pc-video-card");
+
+
+    pcVideoCards.forEach(function (card) {
+
+        const video =
+            card.querySelector("video");
+
+        const playButton =
+            card.querySelector(".pc-video-play");
+
+
+        if (!video) {
+            return;
+        }
+
+
+        /* -----------------------------------------------
+           PLAY BUTTON
+           ----------------------------------------------- */
+
+        if (playButton) {
+
+            playButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    pcPlayVideo(card, video);
+
+                }
+            );
+
+        }
+
+
+        /* -----------------------------------------------
+           CLICK VIDEO
+           ----------------------------------------------- */
+
+        video.addEventListener(
+            "click",
+            function () {
+
+                if (video.paused) {
+
+                    pcPlayVideo(card, video);
+
+                } else {
+
+                    video.pause();
+
+                    card.classList.remove(
+                        "pc-is-playing"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* -----------------------------------------------
+           VIDEO PLAY EVENT
+           ----------------------------------------------- */
+
+        video.addEventListener(
+            "play",
+            function () {
+
+                card.classList.add(
+                    "pc-is-playing"
+                );
+
+            }
+        );
+
+
+        /* -----------------------------------------------
+           VIDEO PAUSE EVENT
+           ----------------------------------------------- */
+
+        video.addEventListener(
+            "pause",
+            function () {
+
+                card.classList.remove(
+                    "pc-is-playing"
+                );
+
+            }
+        );
+
+
+        /* -----------------------------------------------
+           VIDEO ENDED
+           ----------------------------------------------- */
+
+        video.addEventListener(
+            "ended",
+            function () {
+
+                card.classList.remove(
+                    "pc-is-playing"
+                );
+
+                video.currentTime = 0;
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       PLAY VIDEO FUNCTION
+       ===================================================== */
+
+    function pcPlayVideo(card, video) {
+
+        /*
+         * Pause every other video first.
+         */
+
+        document
+            .querySelectorAll(".pc-video-media video")
+            .forEach(function (otherVideo) {
+
+                if (otherVideo !== video) {
+
+                    otherVideo.pause();
+
+                    const otherCard =
+                        otherVideo.closest(
+                            ".pc-video-card"
+                        );
+
+                    if (otherCard) {
+
+                        otherCard.classList.remove(
+                            "pc-is-playing"
+                        );
+
+                    }
+
+                }
+
+            });
+
+
+        /*
+         * Play selected video.
+         */
+
+        const playPromise = video.play();
+
+
+        /*
+         * Some browsers return a Promise
+         * from video.play().
+         */
+
+        if (playPromise !== undefined) {
+
+            playPromise.catch(function () {
+
+                /*
+                 * Browser prevented playback.
+                 * User can press play again.
+                 */
+
+                card.classList.remove(
+                    "pc-is-playing"
+                );
+
+            });
+
+        }
+
+    }
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========================================================
+     YOUR EXISTING TEAM SECTION REMAINS BELOW
+     ========================================================= -->
+
+<!-- ...::: Team Section Start :::... -->
+<section class="section-team">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <!-- ...::: Team Section Start :::... -->
             <section class="section-team">

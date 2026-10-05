@@ -801,6 +801,10 @@ a,
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+
+
+
+
 @media (min-width: 768px) {
   .btn-black {
     padding-left: 42px;
