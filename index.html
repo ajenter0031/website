@@ -38,7 +38,7 @@
 /* Instagram's embed has a header + footer, so cards get extra height.
    If you see white space at the bottom, make this number smaller.
    If the bottom of the reel is cut, make it bigger. */
-.pc-video-section.pc-has-instagram{ --pc-extra:140px; }
+.pc-video-section.pc-has-instagram{ --pc-extra:40px; }
 
 .pc-video-section .pc-video-container{width:100%;max-width:1320px;margin:0 auto;padding:100px 20px}
 .pc-video-heading{margin-bottom:55px}
@@ -55,10 +55,10 @@
 
 /* ---------- 9:16 VIDEO AREA (Shorts / Reels are vertical) ----------
    padding-top % is relative to the card WIDTH:
-   177.78% = 16/9 -> a perfect 9:16 box, plus --pc-extra */
+   Short portrait crop keeps the cards compact while preserving inline playback. */
 .pc-video-media{
     position:relative;width:100%;height:0;
-    padding-top:calc(177.7778% + var(--pc-extra));
+    padding-top:calc(145% + var(--pc-extra));
     overflow:hidden;background:#000;
 }
 .pc-video-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;cursor:pointer}
@@ -106,6 +106,8 @@
     .pc-video-kicker{font-size:12px;letter-spacing:1.5px}
     .pc-video-title{font-size:38px;line-height:1.08}
     .pc-video-card{border-radius:16px}
+    .pc-video-media{padding-top:calc(132% + var(--pc-extra))}
+    .pc-video-section.pc-has-instagram{--pc-extra:20px}
     .pc-video-play{width:58px;height:58px}
     .pc-video-play svg{width:20px;height:20px}
     .pc-video-external{top:12px;right:12px;width:40px;height:40px}
@@ -129,7 +131,7 @@
                     <div class="flex items-center gap-x-10">
                         <!-- Header Logo -->
                         <a href="index.html" class="h-auto w-auto">
-                            <img src="assets/img/Green PRO Creatives Logo.avif" alt="Procreatives logo" width="121" height="24" />
+                            <img src="assets/img/pro-creatives-logo.png" alt="Procreatives logo" width="121" height="24" />
                         </a>
                         <!-- Header Logo -->
 
@@ -160,14 +162,12 @@
                                         </a>
                                         <ul class="sub-menu" id="submenu-1">
                                             <li class="sub-menu--item">
-                                                <a href="team.html" data-menu-get="h3" class="drop-trigger">Team</a>
+                                                <a href="career.html" data-menu-get="h3" class="drop-trigger">Careers</a>
                                             </li>
                                             <li class="sub-menu--item">
                                                 <a href="faq.html" data-menu-get="h3" class="drop-trigger">FAQ’s</a>
                                             </li>
-                                            <li class="sub-menu--item">
-                                                <a href="testimonial.html" data-menu-get="h3" class="drop-trigger">Testimonial</a>
-                                            </li>
+                                            
                                             <li class="sub-menu--item">
                                                 <a href="blog.html" data-menu-get="h3" class="drop-trigger">Blogs</a>
                                             </li>
@@ -1142,7 +1142,7 @@
                         <div class="pc-video-media">
                             <img class="pc-video-poster" src="https://i.ytimg.com/vi/BeX89q82oTo/hqdefault.jpg" alt="YouTube Short 1" loading="lazy" />
                             <button type="button" class="pc-video-play" aria-label="Play video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
-                            <a href="https://www.instagram.com/reel/Daz8bmLC5V0/?stkn=MWc1b3k0YjdnemN6eQ==" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
+                            <a href="https://www.youtube.com/shorts/BeX89q82oTo" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
                         </div>
                     </div>
                 </div>
@@ -1156,23 +1156,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- Instagram Reel 1 -->
-                <div class="swiper-slide">
-                    <div class="pc-video-card" data-platform="instagram" data-id="YOUR_REEL_CODE_1" data-title="Instagram Reel 1">
-                        <div class="pc-video-media" style="--pc-poster:url('assets/img/reels/YOUR_REEL_CODE_1.jpg')">
-                            
-                            <button type="button" class="pc-video-play" aria-label="Play video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
-                            <a href="https://www.instagram.com/reel/YOUR_REEL_CODE_1/" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
-                        </div>
-                    </div>
-                </div>
                 <!-- Instagram Reel 2 -->
                 <div class="swiper-slide">
-                    <div class="pc-video-card" data-platform="instagram" data-id="YOUR_REEL_CODE_2" data-title="Instagram Reel 2">
-                        <div class="pc-video-media" style="--pc-poster:url('assets/img/reels/YOUR_REEL_CODE_2.jpg')">
-                            
+                    <div class="pc-video-card" data-platform="instagram" data-id="Daz8bmLC5V0" data-title="Instagram Reel">
+                        <div class="pc-video-media">
                             <button type="button" class="pc-video-play" aria-label="Play video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></button>
-                            <a href="https://www.instagram.com/reel/Daz8bmLC5V0/?stkn=MWc1b3k0YjdnemN6eQ==" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
+                            <a href="https://www.instagram.com/reel/Daz8bmLC5V0/" target="_blank" rel="noopener noreferrer" class="pc-video-external" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"></path><path d="M10 14L21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg></a>
                         </div>
                     </div>
                 </div>
@@ -1452,7 +1441,7 @@
                     <div class="container">
                         <div class="flex flex-wrap justify-center gap-x-[30px] gap-y-4 lg:justify-between">
                             <a href="index.html">
-                                <img src="assets/img/Green PRO Creatives Logo.avif" alt="Procreatives logo" width="121" height="24" />
+                                <img src="assets/img/pro-creatives-logo.png" alt="Procreatives logo" width="121" height="24" />
                             </a>
 
                             <!-- Copyright Text -->

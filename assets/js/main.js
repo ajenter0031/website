@@ -1,5 +1,22 @@
 "use strict";
 
+// Show the animated brand intro once per browser tab.
+(() => {
+  try {
+    if (sessionStorage.getItem("pc-splash-seen")) return;
+    sessionStorage.setItem("pc-splash-seen", "1");
+  } catch (error) {
+    // Keep the intro usable when storage is unavailable.
+  }
+  const splash = document.createElement("div");
+  splash.className = "pc-splash";
+  splash.setAttribute("role", "presentation");
+  splash.innerHTML = '<div class="pc-splash-inner"><img src="assets/img/pro-creatives-logo.png" alt="Pro Creatives" /><span class="pc-splash-line" aria-hidden="true"></span></div>';
+  document.body.appendChild(splash);
+  window.setTimeout(() => splash.classList.add("pc-splash-hidden"), 1250);
+  window.setTimeout(() => splash.remove(), 1950);
+})();
+
 /* ::::::::::::::::::::
 :: GLobal Javascript ::
 ::::::::::::::::::::::: */

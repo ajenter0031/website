@@ -92,3 +92,70 @@
 .offcanvas-body {
   transition: transform 0.3s ease;
 }
+
+/* Brand logo and shared page-level elements */
+.site-header a img[src*="pro-creatives-logo"] {
+  display: block;
+  width: 92px;
+  height: 62px;
+  object-fit: contain;
+}
+
+.section-footer a img[src*="pro-creatives-logo"] {
+  display: block;
+  width: 92px;
+  height: 62px;
+  object-fit: contain;
+}
+
+.section-team {
+  display: none !important;
+}
+
+.pc-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #172511 0%, #080b08 58%, #050605 100%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 650ms ease, visibility 650ms ease;
+}
+.pc-splash::before,
+.pc-splash::after {
+  position: absolute;
+  width: min(72vw, 520px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(114, 210, 21, .22);
+  border-radius: 50%;
+  content: "";
+  animation: pc-splash-orbit 5s ease-in-out infinite;
+}
+.pc-splash::after {
+  width: min(88vw, 650px);
+  border-color: rgba(114, 210, 21, .1);
+  animation-delay: -2.5s;
+}
+.pc-splash-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  animation: pc-splash-arrive 800ms cubic-bezier(.2,.8,.2,1) both;
+}
+.pc-splash img { width: min(58vw, 280px); height: auto; filter: drop-shadow(0 0 32px rgba(114,210,21,.25)); }
+.pc-splash-line { width: 84px; height: 2px; overflow: hidden; background: rgba(255,255,255,.16); }
+.pc-splash-line::after { display: block; width: 45%; height: 100%; background: #72d215; content: ""; animation: pc-splash-progress 1.15s ease-in-out infinite; }
+.pc-splash.pc-splash-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+@keyframes pc-splash-orbit { 50% { transform: scale(.86); opacity: .35; } }
+@keyframes pc-splash-arrive { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes pc-splash-progress { from { transform: translateX(-110%); } to { transform: translateX(230%); } }
+@media (prefers-reduced-motion: reduce) {
+  .pc-splash::before, .pc-splash::after, .pc-splash-inner, .pc-splash-line::after { animation: none; }
+  .pc-splash { transition-duration: 1ms; }
+}
